@@ -1,0 +1,8 @@
+apiVersion: v1
+kind: Secret
+metadata:
+  name: {{ include "common.fullname" . }}-wildcard
+type: kubernetes.io/tls
+data:
+  tls.crt: {{ required "A valid .Values.wildcard.crt!" .Values.wildcard.crt }}
+  tls.key: {{ required "A valid .Values.wildcard.key!" .Values.wildcard.key }}

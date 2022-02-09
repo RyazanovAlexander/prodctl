@@ -1,0 +1,2 @@
+service-template:
+  replicas: 3

@@ -1,0 +1,20 @@
+apiVersion: v2
+name: monitoring
+description: Monitoring helm chart
+type: application
+version: 0.1.2
+appVersion: 0.1.2
+
+dependencies:
+- name: prometheus-community/alertmanager
+  version: 0.16.0
+  repository: "https://prometheus-community.github.io/helm-charts"
+- name: prometheus-community/prometheus-elasticsearch-exporter
+  version: 0.16.0
+  repository: "https://prometheus-community.github.io/helm-charts"
+- name: prometheus-community/prometheus
+  version: 0.16.0
+  repository: "https://prometheus-community.github.io/helm-charts"
+- name: grafana/grafana
+  version: 6.21.2
+  repository: "https://grafana.github.io/helm-charts"

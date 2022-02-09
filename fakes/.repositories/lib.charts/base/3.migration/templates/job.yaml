@@ -1,0 +1,17 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: "{{ include "common.fullname" . }}-migration"
+spec:
+  template:
+    spec:
+      containers:
+    - name: main
+      image: "{{ .Values.image.repository }}/{{ .Values.image.path }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+      {{- if .Values.command }}
+      command: {{ .Values.command }}
+      {{- end }}
+      {{- if .Values.args }}
+      args: {{ .Values.args }}
+      {{- end }}
+  backoffLimit: 4

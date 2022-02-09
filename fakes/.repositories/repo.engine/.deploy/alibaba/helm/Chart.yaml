@@ -1,0 +1,14 @@
+apiVersion: v2
+name: engine
+description: Engine helm chart
+type: application
+version: 0.1.2
+appVersion: 0.1.2
+
+dependencies:
+- name: service-template
+  version: 1.0.1
+  repository: "https://example.com/charts"
+- name: alibaba-some-resource
+  version: 0.1.0
+  repository: "https://example.com/charts"

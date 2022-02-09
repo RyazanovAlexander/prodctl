@@ -1,0 +1,11 @@
+apiVersion: v2
+name: infrastructure
+description: Infrastructure helm chart
+type: application
+version: 8.6.4
+appVersion: 0.1.2
+
+dependencies:
+- name: stable/postgresql
+  version: 1.0.1
+  repository: "https://charts.bitnami.com/bitnami"

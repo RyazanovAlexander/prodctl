@@ -1,0 +1,18 @@
+key: value
+
+current-context: minikube
+
+contexts:
+  - name: minikube
+    version: 1.46.6
+    type: remote
+    override:
+      key: value
+
+  - name: azure-dev
+    version: 0.11.5
+    type: remote
+    override:
+      cluster:
+        name: dev
+        resourceGroup: test

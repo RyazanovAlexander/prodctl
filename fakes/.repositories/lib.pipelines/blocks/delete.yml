@@ -1,0 +1,6 @@
+parameters:
+- name: param
+  type: string
+
+steps:
+- script: mage delete ${{ parameters.param }}

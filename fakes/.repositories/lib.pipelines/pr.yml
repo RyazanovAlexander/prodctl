@@ -1,0 +1,40 @@
+parameters:
+- name: param
+  type: string
+
+jobs:
+- job: PR
+  pool:
+    vmImage: 'ubuntu-latest'
+  steps:
+  - template: blocks/build.yml
+    parameters:
+      param: ${{ parameters.param }}
+
+  - template: blocks/test.yml
+    parameters:
+      param: ${{ parameters.param }}
+
+  - template: blocks/scan.yml
+    parameters:
+      param: ${{ parameters.param }}
+
+  - template: blocks/bundle.yml
+    parameters:
+      param: ${{ parameters.param }}
+
+  - template: blocks/publish.yml
+    parameters:
+      param: ${{ parameters.param }}
+
+  - template: blocks/deploy.yml
+    parameters:
+      param: ${{ parameters.param }}
+
+  - template: blocks/smoke.yml
+    parameters:
+      param: ${{ parameters.param }}
+
+  - template: blocks/delete.yml
+    parameters:
+      param: ${{ parameters.param }}

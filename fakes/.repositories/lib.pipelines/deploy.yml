@@ -1,0 +1,16 @@
+parameters:
+- name: param
+  type: string
+
+jobs:
+- job: PR
+  pool:
+    vmImage: 'ubuntu-latest'
+  steps:
+  - template: blocks/deploy.yml
+    parameters:
+      param: ${{ parameters.param }}
+
+  - template: blocks/smoke.yml
+    parameters:
+      param: ${{ parameters.param }}

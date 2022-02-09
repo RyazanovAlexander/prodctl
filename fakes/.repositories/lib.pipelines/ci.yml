@@ -1,0 +1,28 @@
+parameters:
+- name: param
+  type: string
+
+jobs:
+- job: CI
+  pool:
+    vmImage: 'ubuntu-latest'
+  steps:
+  - template: blocks/build.yml
+    parameters:
+      param: ${{ parameters.param }}
+
+  - template: blocks/test.yml
+    parameters:
+      param: ${{ parameters.param }}
+
+  - template: blocks/scan.yml
+    parameters:
+      param: ${{ parameters.param }}
+
+  - template: blocks/bundle.yml
+    parameters:
+      param: ${{ parameters.param }}
+
+  - template: blocks/publish.yml
+    parameters:
+      param: ${{ parameters.param }}
