@@ -27,40 +27,67 @@ package cmd
 import (
 	"log"
 
+	c "github.com/RyazanovAlexander/prodctl/v1/internal/command"
+	"github.com/RyazanovAlexander/prodctl/v1/internal/executor"
 	"github.com/spf13/cobra"
-
-	"github.com/RyazanovAlexander/pipeline-manager/command-executor/v1/internal/server"
 )
 
-var globalUsage = `Agent for executing pipeline steps.
+var globalUsage = `A console utility that manages the deployment, upgrade and removal of the selected bundle resources.
 
-Common actions for command-executor:
+Common actions for prodctl:
 
-- command-executor: starts grpc service and waits for execution commands
+- prodctl [directory] ... [directoryN] command [param1] ... [paramN]
+
+Examples:
+
+- prodctl version
+- prodctl deploy --namespace test --release first
+- prodctl environment deploy --clusterName dev --resourceGroup devrg
+- prodctl release engine remove --namespace test --release first
+- prodctl release test run --category smoke --name helloWorld
 `
+
+// The path to the bundle directory, passed as a command line argument.
+var bundleDirPath string
+
+// DefaultBundleDirectoryPath is the path to the default bundle directory.
+const DefaultBundleDirectoryPath = "."
 
 // NewRootCmd creates new root cmd.
 func NewRootCmd(logger *log.Logger, args []string) *cobra.Command {
 	cmd := &cobra.Command{
-		Use:   "command-executor",
-		Short: "Starts grpc service and waits for execution commands",
+		Use:   "prodctl",
+		Short: "Product bundle control",
 		Long:  globalUsage,
-		Run:   func(cmd *cobra.Command, args []string) { runRootCmd(logger, args) },
 	}
 
-	flags := cmd.PersistentFlags()
-	flags.Parse(args)
+	commands := c.CreateCommandTree()
+	cobraCommands := make([]*cobra.Command, len(commands)+1)
+	cobraCommands[0] = newVersionCmd(logger)
+
+	for i := 1; i <= len(commands); i++ {
+		cobraCommands[i] = CreateCommands(commands[i-1], logger)
+	}
 
 	cmd.AddCommand(
-		newVersionCmd(logger),
+		cobraCommands...,
 	)
 
 	return cmd
 }
 
-func runRootCmd(logger *log.Logger, args []string) {
-	err := server.Run(logger)
-	if err != nil {
-		logger.Fatal(err)
+func CreateCommands(command *c.Command, logger *log.Logger) *cobra.Command {
+	cmd := &cobra.Command{
+		Use:   command.Name,
+		Short: command.Description,
+		Run: func(cmd *cobra.Command, args []string) {
+			executor.RunCommand(command, logger)
+		},
 	}
+
+	for key := range command.Input {
+		cmd.PersistentFlags().StringVarP(command.Input[key], key, "n", "", "")
+	}
+
+	return cmd
 }

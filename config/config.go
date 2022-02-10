@@ -32,20 +32,15 @@ import (
 var Config appConfig
 
 type appConfig struct {
-	Debug bool `mapstructure:"DEBUG"`
-
-	ExecutorName   string `mapstructure:"NAME"`
-	ServerGrpcPort string `mapstructure:"SERVER_GRPC_PORT"`
+	BundleDirPath string `mapstructure:"BUNDLE_DIR_PATH"`
 }
 
 // Load loads config from environment variables
 func Load() error {
 	viper.AutomaticEnv()
-	viper.SetEnvPrefix("COMMAND_EXECUTOR")
+	viper.SetEnvPrefix("PRODCTL")
 
-	viper.BindEnv("DEBUG")
-	viper.BindEnv("NAME")
-	viper.BindEnv("SERVER_GRPC_PORT")
+	viper.BindEnv("BUNDLE_DIR_PATH")
 
 	if err := viper.Unmarshal(&Config); err != nil {
 		return err

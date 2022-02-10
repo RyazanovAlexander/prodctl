@@ -1,0 +1,8 @@
+image:
+  repository: github.com # @required
+  path: null # @required
+  tag: null
+  pullPolicy: Always
+
+command: null
+args: null

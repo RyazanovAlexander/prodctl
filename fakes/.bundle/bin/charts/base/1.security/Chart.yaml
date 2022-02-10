@@ -1,0 +1,11 @@
+apiVersion: v2
+name: security
+description: Security resources
+type: application
+version: 0.1.0
+appVersion: 0.1.0
+
+dependencies:
+- name: common
+  version: 0.1.2
+  repository: "https://example.com/charts"

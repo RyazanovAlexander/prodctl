@@ -25,36 +25,17 @@ SOFTWARE.
 package main
 
 import (
-	"context"
 	"log"
 	"os"
-	"os/signal"
 
-	"github.com/RyazanovAlexander/pipeline-manager/command-executor/v1/cmd"
-	"github.com/RyazanovAlexander/pipeline-manager/command-executor/v1/config"
+	"github.com/RyazanovAlexander/prodctl/v1/cmd"
+	"github.com/RyazanovAlexander/prodctl/v1/config"
 )
 
 func main() {
 	config.Load()
-	logger := log.New(os.Stdout, "", log.Lshortfile|log.LstdFlags)
+	logger := log.New(os.Stdout, "", log.Lmsgprefix)
 
-	sigCh := make(chan os.Signal, 1)
-	signal.Notify(sigCh, os.Interrupt)
-
-	errCh := make(chan error)
 	rootCmd := cmd.NewRootCmd(logger, os.Args[1:])
-	go func() {
-		errCh <- rootCmd.ExecuteContext(context.Background())
-	}()
-
-	select {
-	case <-sigCh:
-		logger.Println()
-		logger.Println("Interrupt signal received. Finishing the application...")
-		return
-	case err := <-errCh:
-		if err != nil {
-			logger.Fatal(err)
-		}
-	}
+	rootCmd.Execute()
 }

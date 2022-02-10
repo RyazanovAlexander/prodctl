@@ -11,11 +11,10 @@
             "mode": "auto",
             "program": "${workspaceFolder}/main.go",
             "showLog": true,
+            "args": ["deploy", "--namespace", "test"],
             "env": {
-                "COMMAND_EXECUTOR_NAME": "test",
-                "COMMAND_EXECUTOR_SERVER_GRPC_PORT": ":50051",
-                "COMMAND_EXECUTOR_DEBUG": true
-            }
+                "PRODCTL_BUNDLE_DIR_PATH": "fakes/.bundle",
+            },
         },
         {
             "name": "Test Current File",
@@ -25,11 +24,6 @@
             "program": "${file}",
             "args": [],
             "showLog": true,
-            "env": {
-                "COMMAND_EXECUTOR_NAME": "test",
-                "COMMAND_EXECUTOR_SERVER_GRPC_PORT": ":50051",
-                "COMMAND_EXECUTOR_DEBUG": true
-            }
         }   
     ]
 }

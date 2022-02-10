@@ -26,25 +26,11 @@ package executor
 
 import (
 	"log"
-	"os/exec"
 
-	"github.com/RyazanovAlexander/pipeline-manager/command-executor/v1/config"
+	c "github.com/RyazanovAlexander/prodctl/v1/internal/command"
 )
 
-// To obtain maximum performance, it is necessary to replace the command call in the shells
-// with a call to the running process of a specific application through its client.
-func ExecCommand(cmd string, logger *log.Logger) (string, error) {
-	shell := "sh"
-	if config.Config.Debug {
-		shell = "bash"
-	}
-
-	result, err := exec.Command(shell, "-c", cmd).Output()
-	if err != nil {
-		return "", err
-	}
-
-	logger.Printf("Command executed: '%s'", cmd)
-
-	return string(result), nil
+// RunCommand runs command.
+func RunCommand(command *c.Command, logger *log.Logger) error {
+	return nil
 }

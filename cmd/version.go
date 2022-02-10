@@ -30,14 +30,14 @@ import (
 
 	"github.com/spf13/cobra"
 
-	"github.com/RyazanovAlexander/pipeline-manager/command-executor/v1/internal/version"
+	"github.com/RyazanovAlexander/prodctl/v1/internal/version"
 )
 
 func newVersionCmd(logger *log.Logger) *cobra.Command {
 	cmd := &cobra.Command{
 		Use:   "version",
-		Short: "Show the version for command-executor.",
-		Long:  `Show the version for command-executor.`,
+		Short: "Show the version for prodctl.",
+		Long:  `Show the version for prodctl.`,
 		Run:   func(cmd *cobra.Command, args []string) { runVersionCmd(logger, args) },
 	}
 
