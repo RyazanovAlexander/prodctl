@@ -26,11 +26,33 @@ package executor
 
 import (
 	"log"
+	"os"
+	"path/filepath"
 
 	c "github.com/RyazanovAlexander/prodctl/v1/internal/command"
+
+	"github.com/magefile/mage/sh"
 )
 
 // RunCommand runs command.
 func RunCommand(command *c.Command, logger *log.Logger) error {
-	return nil
+	ex, err := os.Executable()
+	if err != nil {
+		return err
+	}
+	exPath := filepath.Dir(ex)
+
+	args := []string{
+		"-d", exPath + "/" + command.DirectoryPath,
+		command.Name,
+	}
+
+	for _, value := range command.Input {
+		args = append(args, *value)
+	}
+
+	output, err := sh.Output("mage", args...)
+	logger.Println(output)
+
+	return err
 }

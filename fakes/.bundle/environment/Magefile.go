@@ -16,9 +16,11 @@ func Publish() error {
 	return nil
 }
 
-// Deploy deploys resources to the specified environment
-func Deploy() error {
-	fmt.Println("Done!")
+// Deploy deploys environment and release
+// Params:
+//   namespace: some description
+func Deploy(namespace string) error {
+	fmt.Println("Deploy done! Namespace: " + namespace)
 	return nil
 }
 

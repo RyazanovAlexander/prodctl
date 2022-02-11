@@ -3,6 +3,7 @@ module github.com/RyazanovAlexander/prodctl/v1
 go 1.17
 
 require (
+	github.com/magefile/mage v1.12.1
 	github.com/spf13/cobra v1.2.1
 	github.com/spf13/viper v1.9.0
 )
