@@ -100,8 +100,14 @@ func createCommandTree(curDir string, command *Command) {
 
 	for _, fileInfo := range dirs {
 		if fileInfo.IsDir() {
+			fParts := strings.Split(fileInfo.Name(), ".")
+			name := fParts[0]
+			if len(fParts) > 1 {
+				name = fParts[1]
+			}
+
 			dirCommand := &Command{
-				Name: fileInfo.Name(),
+				Name: name,
 			}
 
 			command.SubCommands = append(command.SubCommands, dirCommand)
