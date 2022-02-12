@@ -1,0 +1,3 @@
+wildcard:
+  crt: null # @required
+  key: null # @required

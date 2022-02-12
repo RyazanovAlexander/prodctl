@@ -1,0 +1,11 @@
+apiVersion: v2
+name: ui
+description: UI helm chart
+type: application
+version: 0.1.2
+appVersion: 0.1.2
+
+dependencies:
+- name: service-template
+  version: 1.0.1
+  repository: "https://example.com/charts"

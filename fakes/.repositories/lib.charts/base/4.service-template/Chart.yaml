@@ -1,0 +1,17 @@
+apiVersion: v2
+name: service-template
+description: Standard template for microservice
+type: application
+version: 1.0.1
+appVersion: 1.0.1
+
+dependencies:
+- name: common
+  version: 0.1.2
+  repository: "https://example.com/charts"
+- name: test
+  version: 1.0.5
+  repository: "https://example.com/charts"
+- name: migration
+  version: 2.1.0
+  repository: "https://example.com/charts"
