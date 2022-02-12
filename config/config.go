@@ -25,6 +25,9 @@ SOFTWARE.
 package config
 
 import (
+	"errors"
+	"os"
+
 	"github.com/spf13/viper"
 )
 
@@ -48,6 +51,9 @@ func Load() error {
 
 	if Config.BundleDirPath == "" {
 		Config.BundleDirPath = "/bundle"
+		if _, err := os.Stat(Config.BundleDirPath); errors.Is(err, os.ErrNotExist) {
+			Config.BundleDirPath = "fakes/.bundle"
+		}
 	}
 
 	return nil
