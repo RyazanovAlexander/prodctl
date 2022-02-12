@@ -32,6 +32,6 @@ jobs:
     - name: Login to DockerHub Registry
       run: echo ${{ secrets.DOCKERHUB_PASSWORD }} | docker login -u ${{ secrets.DOCKERHUB_USERNAME }} --password-stdin
 
-    - name: Container
+    - name: Image
       run: |
-        make container DTAG=${{ env.RELEASE_TAG }}
+        make image DTAG=${{ env.RELEASE_TAG }}

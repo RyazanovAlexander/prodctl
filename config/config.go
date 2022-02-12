@@ -46,5 +46,9 @@ func Load() error {
 		return err
 	}
 
+	if Config.BundleDirPath == "" {
+		Config.BundleDirPath = "/bundle"
+	}
+
 	return nil
 }

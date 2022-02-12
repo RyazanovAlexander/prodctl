@@ -1,7 +1,6 @@
 {
     "build":
     {
-        "golang-tag": "1.17",
-        "golang-alpine-tag": "alpine"
+        "golang-tag": "1.17"
     }
 }
