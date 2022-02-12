@@ -17,6 +17,8 @@ func Publish() error {
 }
 
 // Deploy deploys resources to the specified environment
+// Params:
+//   namespace: some description
 func Deploy() error {
 	fmt.Println("Done!")
 	return nil

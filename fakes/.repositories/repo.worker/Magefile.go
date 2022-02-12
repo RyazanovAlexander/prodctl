@@ -16,12 +16,6 @@ func Bundle() error {
 	return nil
 }
 
-// Test run tests
-func Test() error {
-	fmt.Println("Done!")
-	return nil
-}
-
 // Scan run scan
 func Scan() error {
 	fmt.Println("Done!")
@@ -35,14 +29,24 @@ func Publish() error {
 }
 
 // Deploy deploys resources to the specified environment
-func Deploy() error {
-	fmt.Println("Done!")
+// Params:
+//   namespace: some description
+func Deploy(namespace string) error {
+	fmt.Println("Done! Namespace: " + namespace)
 	return nil
 }
 
 // Deletes resources
 func Delete() error {
 	fmt.Println("Done!")
+	return nil
+}
+
+// Deploy deploys resources to the specified environment
+// Params:
+//   filter: test filter
+func Test(filter string) error {
+	fmt.Println("Done! Filter: " + filter)
 	return nil
 }
 
