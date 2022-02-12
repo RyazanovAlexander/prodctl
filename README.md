@@ -1,4 +1,10 @@
-![image](https://github.com/RyazanovAlexander/prodctl/tree/feature/base-implementation/diagrams/product-bundle.png)
+This project demonstrates an approach to product lifecycle management: deploying, updating and removing the environment and services with their resources.
+
+All the artifacts needed to manage resources are provided through the bundle delivered via the Docker image.
+
+![image](https://github.com/RyazanovAlexander/prodctl/blob/feature/base-implementation/diagrams/product-bundle.png)
+
+
 
 The repository includes a "walking skeleton" of the prodctl utility and [sample repositories](https://github.com/RyazanovAlexander/prodctl/tree/feature/base-implementation/fakes/.repositories) with the resources needed for the utility.
 
