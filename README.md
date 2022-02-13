@@ -1,10 +1,10 @@
+# prodctl
+
 This project demonstrates an approach to product lifecycle management: deploying, updating and removing the environment and services with their resources.
 
 All the artifacts needed to manage resources are provided through the bundle delivered via the Docker image.
 
 ![image](https://github.com/RyazanovAlexander/prodctl/blob/feature/base-implementation/diagrams/product-bundle.png)
-
-
 
 The repository includes a "walking skeleton" of the prodctl utility and [sample repositories](https://github.com/RyazanovAlexander/prodctl/tree/feature/base-implementation/fakes/.repositories) with the resources needed for the utility.
 
@@ -12,7 +12,9 @@ The [product bundle](https://github.com/RyazanovAlexander/prodctl/tree/feature/b
 
 The product bundle is delivered as a Docker image. It includes all the utilities necessary to work with the resources included in it.
 
-To download the product, run the command:
+# Demonstration
+
+Download the product of the required version:
 ```
 docker run -it docker.io/aryazanov/product:0.0.1 /bin/bash
 ```
@@ -36,3 +38,36 @@ The following commands are executed inside the container:
 `prodctl release test --filter smoke` - running test.
 
 `prodctl release delete` - deleting a release.
+
+
+# Description of the project repositories
+## Git branches and Versioning
+
+When working with branches, it is recommended to follow the [Trunk-based](https://cloud.google.com/architecture/devops/devops-tech-trunk-based-development) development approach, as opposed to the [Gitflow Workflow](https://www.atlassian.com/git/tutorials/comparing-workflows/gitflow-workflow) approach. Stick to [SemVer](https://semver.org/) when versioning artifacts, otherwise you lose some of Helm's features.
+
+## Microservice repository
+
+```
+repository (git clone https://github.com/engine)
+├── pipelines/
+│    ├── ci.yaml (call common-ci.yaml from https://github.com/pipelines/templates)
+|    └── ...
+├── environments/
+│    ├── k8s/
+|    |    └── terraform/
+|    ├── onPrem/
+|    |    └── ansible/
+|    └── ...
+├── charts/
+|    └── ...
+├── src/
+|    └── ...
+├── Dockerfile
+└── Magefile (commands applied to engine)
+              mage build ...
+              mage bundle type={k8s|onPrem|...}
+              mage deploy ...
+              mage remove ...
+              mage test ...
+              mage publish ...
+```
