@@ -87,3 +87,107 @@ The [.deploy](https://github.com/RyazanovAlexander/prodctl/tree/main/fakes/.repo
 The [.pipelines](https://github.com/RyazanovAlexander/prodctl/tree/main/fakes/.repositories/repo.engine/.pipelines) directory contains pipelines, with the help of which we release artifacts for this microservice.
 
 Pipelines, the prodctl tool, and the developer call the methods defined in the [Magefile](https://github.com/RyazanovAlexander/prodctl/blob/main/fakes/.repositories/repo.engine/Magefile.go), which is located at the root of the repository.
+
+### Standardized deployment modules
+In order not to duplicate helm manifests for each microservice, all repeating blocks are placed in separate Helm charts and included in the dependencies section in [Chart.yaml](https://github.com/RyazanovAlexander/prodctl/blob/main/fakes/.repositories/repo.engine/.deploy/azure-dev/helm/Chart.yaml):
+```yaml
+apiVersion: v2
+name: engine
+description: Engine helm chart
+type: application
+version: 0.1.2
+appVersion: 0.1.2
+
+dependencies:
+- name: service-template
+  version: 1.0.1
+  repository: "https://example.com/charts"
+- name: azure-app-insights
+  version: 0.1.0
+  repository: "https://example.com/charts"
+- name: azure-identity
+  version: 0.1.0
+  repository: "https://example.com/charts"
+- name: azure-key-vault
+  version: 0.1.0
+  repository: "https://example.com/charts"
+```
+
+For a Helm chart [intended for AWS](https://github.com/RyazanovAlexander/prodctl/blob/main/fakes/.repositories/repo.engine/.deploy/aws/helm/Chart.yaml), other manifests can be defined:
+```yaml
+...
+dependencies:
+- name: service-template
+  version: 1.0.1
+  repository: "https://example.com/charts"
+- name: aws-some-resource
+  version: 0.1.0
+  repository: "https://example.com/charts"
+```
+
+We should follow a similar strategy for Terraform and other tools.
+
+All dependencies for [Helm chart](https://github.com/RyazanovAlexander/prodctl/tree/main/fakes/.repositories/lib.charts) and [Terraform modules](https://github.com/RyazanovAlexander/prodctl/tree/main/fakes/.repositories/lib.terraform) are located in their respective repositories.
+
+These repositories are separately versioned and have their own pipelines.
+
+### Pipeline
+Each repository with a microservice contains standardized pipelines for releasing artifacts. All these pipelines only refer to a common repository with pipelines, in which the real work is done.
+
+For example, the [ci.yml](https://github.com/RyazanovAlexander/prodctl/blob/main/fakes/.repositories/repo.engine/.pipelines/ci.yml) pipeline refers to [ci.yaml](https://github.com/RyazanovAlexander/prodctl/blob/main/fakes/.repositories/lib.pipelines/ci.yml) from the [lib.pipelines](https://github.com/RyazanovAlexander/prodctl/tree/main/fakes/.repositories/lib.pipelines) repository, which in turn uses standardized blocks:
+
+```yaml
+- template: blocks/build.yml
+  parameters:
+  param: ${{ parameters.param }}
+
+- template: blocks/test.yml
+  parameters:
+  param: ${{ parameters.param }}
+
+- template: blocks/scan.yml
+  parameters:
+  param: ${{ parameters.param }}
+
+- template: blocks/bundle.yml
+  parameters:
+  param: ${{ parameters.param }}
+
+- template: blocks/publish.yml
+  parameters:
+  param: ${{ parameters.param }}
+```
+
+Each of the [blocks](https://github.com/RyazanovAlexander/prodctl/blob/main/fakes/.repositories/lib.pipelines/blocks/bundle.yml) calls the corresponding method from the Magefile.go file, which must be defined in it:
+```yaml
+parameters:
+- name: param
+  type: string
+
+steps:
+- script: mage bundle ${{ parameters.param }}
+```
+
+### Magefile
+The Magefile contains methods for working with the current repository. For example, when calling the 'Deploy(envType string)' method, the resources specified in the './deploy/[envType]' directory will be deployed:
+```Go
+// Deploy deploys resources to the specified environment
+// Params:
+//   envType: environment type
+func Deploy(envType string) error {
+	...
+	return nil
+}
+```
+
+All common code for Magefiles is moved to a separate [repository](https://github.com/RyazanovAlexander/prodctl/tree/main/fakes/.repositories/lib.mage/pkg).
+A link to a specific version of this repository must be written in the go.mod file:
+```Go
+module github.com/RyazanovAlexander/engine/v1
+
+go 1.17
+
+require (
+	github.com/RyazanovAlexander/lib.mage v1.12.1
+)
+```
