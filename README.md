@@ -75,7 +75,7 @@ repository (git clone https://github.com/engine)
       mage build ...
       mage bundle type={aws|azure|onPrem|...}
       mage deploy ...
-      mage remove ...
+      mage delete ...
       mage test ...
       mage publish ...
 ```
@@ -214,4 +214,63 @@ contexts:
         resourceGroup: test
 ```
 
+## Environments repository
+```
+repository (git clone https://github.com/environments)
+├── .pipelines/
+│    ├── ci.yaml
+│    ├── delete.yml
+│    ├── deploy.yml
+│    └── pr.yml
+├── aws/
+│    ├── terraform/
+│    ├── context.yaml
+│    └── values.yaml
+├── onprem/
+│    ├── ansible/
+│    ├── context.yaml
+│    └── values.yaml
+├── ...
+├── Dockerfile
+└── Magefile.go
+      mage bundle type={aws|azure|onPrem|...}
+      mage deploy ...
+      mage delete ...
+      mage publish ...
+```
+
 ## Releases repository
+```
+repository (git clone https://github.com/releases)
+├── .pipelines/
+│    ├── ci.yaml
+│    ├── delete.yml
+│    ├── deploy.yml
+│    └── pr.yml
+├── context.yaml
+├── values.yaml
+├── Dockerfile
+└── Magefile.go
+      mage build ...
+      mage bundle ...
+      mage deploy ...
+      mage delete ...
+      mage test ...
+      mage publish ...
+```
+
+## Product repository
+```
+repository (git clone https://github.com/product)
+├── .pipelines/
+│    ├── ci.yaml
+│    ├── delete.yml
+│    ├── deploy.yml
+│    └── pr.yml
+├── Dockerfile
+└── Magefile.go
+      mage deploy ...
+      mage delete ...
+      mage ready ...
+      mage binaries ...
+```
