@@ -191,3 +191,25 @@ require (
 	github.com/RyazanovAlexander/lib.mage v1.12.1
 )
 ```
+
+### Context File
+The [context file](https://github.com/RyazanovAlexander/prodctl/blob/main/fakes/.repositories/repo.engine/context.yaml) contains variables for working with a specific environment. It is used for local development. So, for example, when calling the Deploy method in Magefile.go, the current value of the 'current-context' variable and the corresponding values for the given context are read from the context.yaml file, which will be used when executing the Deploy command.
+
+```yaml
+current-context: minikube
+
+contexts:
+  - name: minikube
+    version: 1.46.6
+    type: remote
+    override:
+      key: value
+
+  - name: azure-dev
+    version: 0.11.5
+    type: remote
+    override:
+      cluster:
+        name: dev
+        resourceGroup: test
+```
