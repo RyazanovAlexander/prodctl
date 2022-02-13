@@ -47,27 +47,35 @@ When working with branches, it is recommended to follow the [Trunk-based](https:
 
 ## Microservice repository
 
+A specific example can be seen [here](https://github.com/RyazanovAlexander/prodctl/tree/main/fakes/.repositories/repo.engine).
+The microservice repository has the following structure:
+
 ```
 repository (git clone https://github.com/engine)
-├── pipelines/
-│    ├── ci.yaml (call common-ci.yaml from https://github.com/pipelines/templates)
+├── .deploy/
+│    ├── aws/
+│    |   ├── helm/
+|    |   └── terraform/
+│    ├── azure/
+│    |   ├── helm/
+|    |   └── terraform/
+│    ├── onPrem/
+│    |   └── ansible/
 |    └── ...
-├── environments/
-│    ├── k8s/
-|    |    └── terraform/
-|    ├── onPrem/
-|    |    └── ansible/
-|    └── ...
-├── charts/
-|    └── ...
+├── .pipelines/
+│    ├── ci.yaml
+│    ├── delete.yml
+│    ├── deploy.yml
+│    └── pr.yml
 ├── src/
 |    └── ...
 ├── Dockerfile
-└── Magefile (commands applied to engine)
-              mage build ...
-              mage bundle type={k8s|onPrem|...}
-              mage deploy ...
-              mage remove ...
-              mage test ...
-              mage publish ...
+├── context.yaml
+└── Magefile.go (commands applied to engine)
+      mage build ...
+      mage bundle type={aws|azure|onPrem|...}
+      mage deploy ...
+      mage remove ...
+      mage test ...
+      mage publish ...
 ```
