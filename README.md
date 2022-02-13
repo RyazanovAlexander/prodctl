@@ -79,3 +79,11 @@ repository (git clone https://github.com/engine)
       mage test ...
       mage publish ...
 ```
+
+The [src](https://github.com/RyazanovAlexander/prodctl/tree/main/fakes/.repositories/repo.engine/src) directory contains the microservice source code.
+
+The [.deploy](https://github.com/RyazanovAlexander/prodctl/tree/main/fakes/.repositories/repo.engine/.deploy) directory contains manifests for deploying this microservice with its infrastructure services. Depending on the type of environment, the manifest can be described using Helm, Terraform, Ansible, etc.
+
+The [.pipelines](https://github.com/RyazanovAlexander/prodctl/tree/main/fakes/.repositories/repo.engine/.pipelines) directory contains pipelines, with the help of which we release artifacts for this microservice.
+
+Pipelines, the prodctl tool, and the developer call the methods defined in the [Magefile](https://github.com/RyazanovAlexander/prodctl/blob/main/fakes/.repositories/repo.engine/Magefile.go), which is located at the root of the repository.
