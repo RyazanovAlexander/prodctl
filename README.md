@@ -291,6 +291,7 @@ servies:
 ```
 
 ## Product repository
+The final artifact is assembled in the [product repository](https://github.com/RyazanovAlexander/prodctl/tree/main/fakes/.repositories/cfg.product), consisting of an environment bundle, a release bundle, and the utilities necessary to manage them. All these artifacts are collected in one docker image. An example of a product bundle can be viewed [here](https://github.com/RyazanovAlexander/prodctl/tree/main/fakes/.bundle). Optionally, the bundle can [include](https://github.com/RyazanovAlexander/prodctl/tree/main/fakes/.bundle/bin) basic helm charts and all used docker images.
 ```
 repository (git clone https://github.com/product)
 ├── .pipelines/
