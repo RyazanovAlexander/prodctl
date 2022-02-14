@@ -242,6 +242,7 @@ repository (git clone https://github.com/environments)
 ```
 
 ## Releases repository
+In the [releases repository](https://github.com/RyazanovAlexander/prodctl/tree/main/fakes/.repositories/cfg.environments), the only resource of interest is the [values.yaml](https://github.com/RyazanovAlexander/prodctl/blob/main/fakes/.repositories/cfg.releases/values.yaml) file. This file defines the composition of services, their versions, overridden variables for helm charts and the deployment order for a given version of the release. A new release is created by creating the appropriate "release/X.X.X" branch. The release ideologically has complete information about its microservices and can overwrite their variables, but knows nothing about the environment in which they will be delivered.
 ```
 repository (git clone https://github.com/releases)
 ├── .pipelines/
@@ -259,6 +260,34 @@ repository (git clone https://github.com/releases)
       mage delete ...
       mage test ...
       mage publish ...
+```
+
+An example of the content of values.yaml file:
+```yaml
+name: White Rabbit
+
+servies:
+  - name: infrastructure
+    version: 0.1.6
+    order: 0
+  - name: monitoring
+    version: 1.1.0
+    order: 1
+  - name: engine
+    version: 1.4.6
+    order: 2
+    parameters:
+      someValue: override
+      replicas: 5
+  - name: test
+    version: 0.5.5
+    order: 2
+  - name: ui
+    version: 2.6.9
+    order: 2
+  - name: worker
+    version: 5.1.0
+    order: 2
 ```
 
 ## Product repository
