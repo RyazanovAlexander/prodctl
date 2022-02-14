@@ -215,6 +215,8 @@ contexts:
 ```
 
 ## Environments repository
+The [environment repository](https://github.com/RyazanovAlexander/prodctl/tree/main/fakes/.repositories/cfg.environments) contains the resources required to create the corresponding environment, as well as the environment variables. Environments ideologically know nothing about specific microservices or releases. Environment variables are passed to helm charts when they are set. So, for example, if the environment variable value "durable: false" is specified in the [environment variable file](https://github.com/RyazanovAlexander/prodctl/blob/main/fakes/.repositories/cfg.environments/azure-dev/values.yaml), then the helm chart of a particular service may interpret this as the need to run in one replica, otherwise it will run in three replicas.
+
 ```
 repository (git clone https://github.com/environments)
 ├── .pipelines/
